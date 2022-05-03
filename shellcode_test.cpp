@@ -1,6 +1,5 @@
 #include <fstream>
 #include <iostream>
-#include <thread>
 
 #include <sys/mman.h>
 #include <unistd.h>
@@ -23,7 +22,7 @@ int main(void)
     auto shellcode_size = shellcode_bin.tellg();
     shellcode_bin.seekg(0, std::ios::beg);
 
-    auto allocated = static_cast<char*>(
+    auto shellcode_start = reinterpret_cast<void (*)()>(
       mmap(reinterpret_cast<void*>(0x10000),
            (static_cast<std::size_t>(shellcode_size) + page_size)
              & ~(page_size - 1),
@@ -32,17 +31,18 @@ int main(void)
            -1,
            0));
 
-    if (allocated != reinterpret_cast<char*>(0x10000))
+    if (reinterpret_cast<void*>(shellcode_start)
+        != reinterpret_cast<void*>(0x10000))
     {
         std::cerr << "could not allocate at 0x10000"
                   << "\n";
         return -1;
     }
 
-    shellcode_bin.read(reinterpret_cast<char*>(allocated),
+    shellcode_bin.read(reinterpret_cast<char*>(shellcode_start),
                        shellcode_size);
 
-    std::jthread(reinterpret_cast<void (*)()>(allocated));
+    shellcode_start();
 
     return 0;
 }
