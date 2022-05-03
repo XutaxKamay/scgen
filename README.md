@@ -13,7 +13,7 @@ as long you have the same architecture.
     - g++ 
 - For Windows you need MinGW with g++
 ## How to use
-Simply modify shellcode.cpp to your needs.
+Check examples/shellcode_hello_world.cpp, shellcode_linker.ld, tests/shellcode_test.cpp
 ## TODO
 - Do more examples by using nolibc etc.
 - Makefile
