@@ -1,5 +1,5 @@
 #if not defined(__x86_64__) and not defined(__i386__)
-#error "Not supported architecture"
+    #error "Not supported architecture"
 #endif
 
 #include <fstream>
@@ -10,7 +10,7 @@
 
 int main(void)
 {
-    static size_t page_size = static_cast<size_t>(getpagesize());
+    static auto page_size = static_cast<size_t>(getpagesize());
 
     std::ifstream shellcode_bin("./shellcode.bin",
                                 std::ios::binary | std::ios::in);
