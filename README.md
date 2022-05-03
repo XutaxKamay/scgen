@@ -23,6 +23,54 @@ To run the current shellcode test:
 	- `cp examples/shellcode_hello_world.bin tests/shellcode.bin`
 - go to `tests` folder
 - run, `./tests/shellcode_test.out`
+## x86-64 (shellcode) binary output example
+Running `rz-asm -a x86 -b 64 -d "$(hexdump -e '16/1 "%02X"' ./examples/shellcode_hello_world.bin)"`,<br>
+should give:
+```asm
+movabs rax, 0x57202c6f6c6c6548          ; .text section starts here, writing the start of Hello, World
+push r12                                ;
+xor r11d, r11d                          ;
+mov r12d, 0xd                           ; Hello, World length
+push rbp                                ;
+push rbx                                ;
+mov ebx, 1                              ;
+mov qword [rsp - 0xe], rax              ;
+mov eax, 0xa                            ;
+lea rbp, [rsp - 0xe]                    ;
+mov dword [rsp - 6], 0x646c726f         ;
+mov word [rsp - 2], ax                  ;
+mov rax, rbx                            ;
+mov rdi, rbx                            ;
+mov rsi, rbp                            ;
+mov rdx, r12                            ;
+mov rcx, r11                            ;
+mov r8, r11                             ;
+mov r9, r11                             ;
+mov r10, r11                            ;
+syscall                                 ; write linux syscall on STDOUT
+mov r11, rax                            ;
+test r11, r11                           ;
+je 0x7c                                 ;
+mov rax, qword [0x10000]                ;
+mov qword [rip + 0x27], rax             ;
+mov qword [0x10000], 0xffffffffffffffff ;
+mov byte [rip + 0xc], 1                 ;
+pop rbx                                 ;
+pop rbp                                 ;
+pop r12                                 ;
+ret                                     ; .text section ends here
+nop dword [rax]                         ; .data starts here with Struct::initialized
+add byte [rax], al                      ; Struct::member
+add byte [rax], al                      ; Struct::member
+add byte [rax], al                      ; Struct::member
+add byte [rax], al                      ; Struct::member
+add byte [rax], al                      ; Struct::member
+add byte [rax], al                      ; Struct::member
+add byte [rax], al                      ; Struct::member
+add byte [rax], al                      ; .data ends here
+```
+The last opcodes that has failed to disassemble represents just .data/.bss section.
 ## TODO
 - Do more examples by using nolibc etc.
 - (better) Makefile
+- Force entrypoint to be at the start of the shellcode.
