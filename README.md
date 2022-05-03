@@ -7,7 +7,8 @@ it is known feature called "freestanding" environment.
 The contrary by default is "host" environment, where it targets mostly for your specific machine, OS, etc.<br>
 It is generally used for very low-level (Embedded system, BIOS, Firmware, Kernel, OS ...) programming.<br>
 It permits to write possibly code that is compatible with all platforms,<br>
-as long you have the same architecture.
+as long you have the same architecture.<br><br>
+TL;DR, you can now inject your stuffs without having to parse or manual map the binary output format (ELF/PE).
 ## Requirements
 - g++
 - make
