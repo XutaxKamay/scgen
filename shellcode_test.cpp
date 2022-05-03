@@ -1,11 +1,9 @@
-#include <alloca.h>
 #include <fstream>
 #include <iostream>
-#include <new>
 #include <thread>
-#include <unistd.h>
 
 #include <sys/mman.h>
+#include <unistd.h>
 
 int main(void)
 {
@@ -16,7 +14,7 @@ int main(void)
 
     if (not shellcode_bin.is_open())
     {
-        std::cerr << "Couldn't not open shellcode.bin"
+        std::cerr << "could not open shellcode.bin"
                   << "\n";
         return -1;
     }
