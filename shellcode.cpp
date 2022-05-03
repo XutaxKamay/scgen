@@ -2,18 +2,18 @@ struct Struct
 {
     static volatile bool initialized;
 
-    void test_method(unsigned long blah)
+    void test_method(unsigned long blah) volatile
     {
         member = *reinterpret_cast<unsigned long*>(0x10000);
         *reinterpret_cast<unsigned long*>(0x10000) = blah;
         initialized                                = true;
     }
 
-    unsigned long member;
+    volatile unsigned long member;
 };
 
 volatile bool Struct::initialized = false;
-static Struct g_struct {};
+volatile static Struct g_struct {};
 
 static inline unsigned long syscall(unsigned long rax,
                                     unsigned long rdi = 0,
