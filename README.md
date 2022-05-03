@@ -13,16 +13,16 @@ as long you have the same architecture.
 - make
 ## How to use
 Check how to write your own shellcode by looking at:
-- examples/shellcode_hello_world.cpp
-- shellcode_linker.ld
-- tests/shellcode_test.cpp
+- `examples/shellcode_hello_world.cpp`
+- `shellcode_linker.ld`
+- `tests/shellcode_test.cpp`
 
 To run the current shellcode test:
-- type `make -j$(nproc)`
-- pick your example in examples by copying it:
+- Type `make -j$(nproc)`
+- Pick your example in `examples` folder by copying it:
 	- `cp examples/shellcode_hello_world.bin tests/shellcode.bin`
-- go to `tests` folder
-- run, `./tests/shellcode_test.out`
+- Go to `tests` folder
+- Run, `./shellcode_test.out`
 ## x86-64 (shellcode) binary output example
 Running `rz-asm -a x86 -b 64 -d "$(hexdump -e '16/1 "%02X"' ./examples/shellcode_hello_world.bin)"`,<br>
 should give:
