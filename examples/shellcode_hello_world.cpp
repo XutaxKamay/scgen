@@ -1,5 +1,5 @@
 #ifndef __x86_64__
-#error "Not supported"
+#error "Not supported architecture"
 #endif
 
 struct Struct

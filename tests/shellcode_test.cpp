@@ -1,5 +1,5 @@
 #if not defined(__x86_64__) and not defined(__i386__)
-#error "Not supported arch"
+#error "Not supported architecture"
 #endif
 
 #include <fstream>
