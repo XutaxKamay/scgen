@@ -14,3 +14,6 @@ as long you have the same architecture.
 - For Windows you need MinGW with g++
 ## How to use
 Simply modify shellcode.cpp to your needs.
+## TODO
+- Do more examples by using nolibc etc.
+- Makefile
