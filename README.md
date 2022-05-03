@@ -9,9 +9,8 @@ It is generally used for very low-level (Embedded system, BIOS, Firmware, Kernel
 It permits to write possibly code that is compatible with all platforms,<br>
 as long you have the same architecture.
 ## Requirements
-- GNU/Linux:
-    - g++ 
-- For Windows you need MinGW with g++
+- g++
+- make
 ## How to use
 Check how to write your own shellcode by looking at:
 - examples/shellcode_hello_world.cpp
