@@ -13,7 +13,17 @@ as long you have the same architecture.
     - g++ 
 - For Windows you need MinGW with g++
 ## How to use
-Check examples/shellcode_hello_world.cpp, shellcode_linker.ld, tests/shellcode_test.cpp
+Check how to write your own shellcode by looking at:
+- examples/shellcode_hello_world.cpp
+- shellcode_linker.ld
+- tests/shellcode_test.cpp
+
+To run the current shellcode test:
+- type `make -j$(nproc)`
+- pick your example in examples by copying it:
+	- `cp examples/shellcode_hello_world.bin tests/shellcode.bin`
+- go to `tests` folder
+- run, `./tests/shellcode_test.out`
 ## TODO
 - Do more examples by using nolibc etc.
-- Makefile
+- (better) Makefile
