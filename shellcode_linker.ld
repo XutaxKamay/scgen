@@ -1,6 +1,5 @@
 OUTPUT_FORMAT("binary")
 ENTRY(_start)
-OUTPUT(shellcode.bin)
 
 SECTIONS
 {

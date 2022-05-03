@@ -1,3 +1,7 @@
+#ifndef __x86_64__
+#error "Not supported"
+#endif
+
 struct Struct
 {
     static volatile bool initialized;
@@ -66,4 +70,3 @@ extern "C" void _start(void)
         g_struct.test_method(0xFFFFFFFFFFFFFFFF);
     }
 }
-
