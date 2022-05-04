@@ -16,7 +16,7 @@ examples/%.bin: examples/%.o
 examples/%.o: examples/%.cpp
 	$(CXX) $(CPPFLAGS) $(CXXFLAGS) $(SHELLCODE_FLAGS) -c -o $@ $<
 
-###  Shellcode testing ###
+### Shellcode testing ###
 tests/shellcode_test.out : tests/shellcode_test.o
 	$(CXX) $(CPPFLAGS) $(CXXFLAGS) $(SHELLCODE_TEST_FLAGS) $(LDFLAGS) \
 		-o $@ $<
