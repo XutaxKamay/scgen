@@ -56,7 +56,7 @@ static inline unsigned long syscall(unsigned long rax,
     return ret;
 }
 
-extern "C" void _start(void)
+void main(void)
 {
     volatile char hello_world[] = "Hello, World\n";
 
@@ -69,4 +69,9 @@ extern "C" void _start(void)
     {
         g_struct.test_method(0xFFFFFFFFFFFFFFFF);
     }
+}
+
+extern "C" void _start(void)
+{
+    main();
 }

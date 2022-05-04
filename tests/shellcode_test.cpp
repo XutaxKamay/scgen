@@ -8,18 +8,36 @@
 #include <sys/mman.h>
 #include <unistd.h>
 
-int main(void)
+namespace error_code
 {
+    enum : int
+    {
+        NO_ERRORS        = 0,
+        ARGUMENT_MISSING = -1,
+        CANT_OPEN_FILE   = -2,
+        CANT_ALLOCATE    = -3
+    };
+}
+
+int main(int argc, char** argv)
+{
+    if (argc < 2)
+    {
+        std::cerr << "missing arguments, usage: ./shellcode_test.out "
+                     "</path/to/shellcode>"
+                  << "\n";
+        return error_code::ARGUMENT_MISSING;
+    }
+
     static auto page_size = static_cast<size_t>(getpagesize());
 
-    std::ifstream shellcode_bin("./shellcode.bin",
-                                std::ios::binary | std::ios::in);
+    std::ifstream shellcode_bin(argv[1], std::ios::binary | std::ios::in);
 
     if (not shellcode_bin.is_open())
     {
         std::cerr << "could not open shellcode.bin"
                   << "\n";
-        return -1;
+        return error_code::CANT_OPEN_FILE;
     }
 
     shellcode_bin.seekg(0, std::ios::end);
@@ -40,7 +58,7 @@ int main(void)
     {
         std::cerr << "could not allocate at 0x10000"
                   << "\n";
-        return -1;
+        return error_code::CANT_ALLOCATE;
     }
 
     shellcode_bin.read(reinterpret_cast<char*>(shellcode_start),
@@ -48,5 +66,5 @@ int main(void)
 
     shellcode_start();
 
-    return 0;
+    return error_code::NO_ERRORS;
 }

@@ -13,22 +13,19 @@ TL;DR, you can now inject your stuffs without having to parse or manual map the 
 - g++
 - make
 ## How to use
+Simply add your cpp file to `examples` folder.<br>
 Check how to write your own shellcode by looking at:
 - `examples/shellcode_hello_world.cpp`
-- `shellcode_linker.ld`
-- `tests/shellcode_test.cpp`
 
 To run the current shellcode test:
 - Type `make -j$(nproc)`
-- Pick your example in `examples` folder by copying it:
-	- `cp examples/shellcode_hello_world.bin tests/shellcode.bin`
-- Go to `tests` folder
-- Run, `./shellcode_test.out`
+- Pick your example in `examples` folder.
+- Run, `./tests/shellcode_test.out <path/to/shellcode/example>`
 ## x86-64 (shellcode) binary output example
 Running `rz-asm -a x86 -b 64 -d "$(hexdump -e '16/1 "%02X"' ./examples/shellcode_hello_world.bin)"`,<br>
-should give:
+should give close to:
 ```asm
-movabs rax, 0x57202c6f6c6c6548          ; .text section starts here, writing the start of Hello, World
+movabs rax, 0x57202c6f6c6c6548          ; .text section starts here, rax filled with start of Hello, World
 push r12                                ;
 xor r11d, r11d                          ;
 mov r12d, 0xd                           ; Hello, World length
@@ -60,15 +57,15 @@ pop rbx                                 ;
 pop rbp                                 ;
 pop r12                                 ;
 ret                                     ; .text section ends here
-nop dword [rax]                         ; .data starts here with Struct::initialized
+nop dword [rax]                         ; .data section starts and ends with Struct::initialized
+add byte [rax], al                      ; .bss section starts here with Struct::member
 add byte [rax], al                      ; Struct::member
 add byte [rax], al                      ; Struct::member
 add byte [rax], al                      ; Struct::member
 add byte [rax], al                      ; Struct::member
 add byte [rax], al                      ; Struct::member
 add byte [rax], al                      ; Struct::member
-add byte [rax], al                      ; Struct::member
-add byte [rax], al                      ; .data ends here
+add byte [rax], al                      ; .bss section ends here with Struct::member
 ```
 The last opcodes that has failed to disassemble represents just .data/.bss section.
 ## TODO
