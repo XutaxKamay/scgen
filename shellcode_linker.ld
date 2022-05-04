@@ -13,7 +13,7 @@ SECTIONS
 	 * These two can be discarded,
 	 * not interesting for our shellcode.
 	 */
-	/DISCARD/:
+	/DISCARD/ :
 	{
 		*(.note.gnu.property)
 		*(.eh_frame)

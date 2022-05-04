@@ -1,8 +1,14 @@
 #include <fstream>
 #include <iostream>
 
-#include <sys/mman.h>
-#include <unistd.h>
+#if defined(__linux__)
+    #include <sys/mman.h>
+    #include <unistd.h>
+#elif defined(_WIN32)
+    #include <windows.h>
+#else
+    #error "OS not supported"
+#endif
 
 namespace error_code
 {
@@ -25,7 +31,17 @@ int main(int argc, char** argv)
         return error_code::ARGUMENT_MISSING;
     }
 
-    static auto page_size = static_cast<size_t>(getpagesize());
+    static auto page_size = static_cast<size_t>(
+      []()
+      {
+#if defined(__linux__)
+          return getpagesize();
+#elif defined(_WIN32)
+          SYSTEM_INFO si;
+          GetSystemInfo(&si);
+          return si.dwPageSize;
+#endif
+      }());
 
     std::ifstream shellcode_bin(argv[1], std::ios::binary | std::ios::in);
 
@@ -41,21 +57,36 @@ int main(int argc, char** argv)
     shellcode_bin.seekg(0, std::ios::beg);
 
     auto shellcode_start = reinterpret_cast<void (*)()>(
-      mmap(reinterpret_cast<void*>(0x10000),
-           (static_cast<std::size_t>(shellcode_size) + page_size)
-             & ~(page_size - 1),
-           PROT_EXEC | PROT_WRITE | PROT_READ,
-           MAP_ANONYMOUS | MAP_PRIVATE,
-           -1,
-           0));
+      [&shellcode_size]()
+      {
+#if defined(__linux__)
+          return mmap(nullptr,
+                      (static_cast<std::size_t>(shellcode_size)
+                       + page_size)
+                        & ~(page_size - 1),
+                      PROT_EXEC | PROT_WRITE | PROT_READ,
+                      MAP_ANONYMOUS | MAP_PRIVATE,
+                      -1,
+                      0);
+#elif defined(_WIN32)
+          return VirtualAlloc(nullptr,
+                              (static_cast<std::size_t>(shellcode_size)
+                               + page_size)
+                                & ~(page_size - 1),
+                              MEM_COMMIT | MEM_RESERVE,
+                              PAGE_EXECUTE_READWRITE);
+#endif
+      }());
 
-    if (reinterpret_cast<void*>(shellcode_start)
-        != reinterpret_cast<void*>(0x10000))
+    if (reinterpret_cast<void*>(shellcode_start) == nullptr)
     {
-        std::cerr << "could not allocate at 0x10000"
+        std::cerr << "could not allocate memory for shellcode"
                   << "\n";
         return error_code::CANT_ALLOCATE;
     }
+
+    std::cout << "allocated memory for shellcode at: "
+              << reinterpret_cast<void*>(shellcode_start) << "\n";
 
     shellcode_bin.read(reinterpret_cast<char*>(shellcode_start),
                        shellcode_size);

@@ -1,4 +1,4 @@
-#ifndef __x86_64__
+#if not defined(__x86_64__)
     #error "Not supported architecture"
 #endif
 
@@ -6,30 +6,32 @@ struct Struct
 {
     static volatile bool initialized;
 
-    void test_method(unsigned long blah) volatile
+    void test_method(unsigned long long blah) volatile
     {
-        member = *reinterpret_cast<unsigned long*>(0x10000);
-        *reinterpret_cast<unsigned long*>(0x10000) = blah;
-        initialized                                = true;
+        member = blah;
     }
 
-    volatile unsigned long member;
+    volatile unsigned long long member;
 };
 
 volatile bool Struct::initialized = false;
 volatile static Struct g_struct {};
 
-static inline unsigned long syscall(unsigned long rax,
-                                    unsigned long rdi = 0,
-                                    unsigned long rsi = 0,
-                                    unsigned long rdx = 0,
-                                    unsigned long rcx = 0,
-                                    unsigned long r8  = 0,
-                                    unsigned long r9  = 0,
-                                    unsigned long r10 = 0)
+static inline unsigned long long syscall(unsigned long long number,
+                                         unsigned long long arg1 = 0,
+                                         unsigned long long arg2 = 0,
+                                         unsigned long long arg3 = 0,
+                                         unsigned long long arg4 = 0,
+                                         unsigned long long arg5 = 0,
+                                         unsigned long long arg6 = 0,
+                                         unsigned long long arg7 = 0)
 {
-    unsigned long ret;
+    unsigned long long ret;
 
+    /**
+     * TODO:
+     * Add support for Windows and others OSes here
+     */
     asm(".intel_syntax noprefix;\n\t"
         "mov rax, %1\n\t"
         "mov rdi, %2\n\t"
@@ -43,14 +45,14 @@ static inline unsigned long syscall(unsigned long rax,
         "mov %0, rax\n\t"
         ".att_syntax prefix;\n\t"
         : "=r"(ret)
-        : "r"(rax),
-          "r"(rdi),
-          "r"(rsi),
-          "r"(rdx),
-          "r"(rcx),
-          "r"(r8),
-          "r"(r9),
-          "r"(r10)
+        : "r"(number),
+          "r"(arg1),
+          "r"(arg2),
+          "r"(arg3),
+          "r"(arg4),
+          "r"(arg5),
+          "r"(arg6),
+          "r"(arg7)
         : "rax", "rdi", "rsi", "rdx", "rcx", "r8", "r9", "r10", "memory");
 
     return ret;
@@ -58,11 +60,12 @@ static inline unsigned long syscall(unsigned long rax,
 
 void main(void)
 {
+    Struct::initialized         = true;
     volatile char hello_world[] = "Hello, World\n";
 
     auto ret = syscall(1,
                        1,
-                       reinterpret_cast<unsigned long>(hello_world),
+                       reinterpret_cast<unsigned long long>(hello_world),
                        sizeof(hello_world) - 1);
 
     if (ret > 0)
