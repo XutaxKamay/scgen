@@ -70,5 +70,3 @@ add byte [rax], al                      ; .bss section ends here with Struct::me
 The last opcodes that has failed to disassemble represents just .data/.bss section.
 ## TODO
 - Do more examples by using nolibc etc.
-- (better) Makefile
-- Force entrypoint to be at the start of the shellcode.
