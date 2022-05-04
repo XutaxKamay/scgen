@@ -1,5 +1,14 @@
-SHELLCODE_FLAGS:=-O3 -s -std=c++20 -static-pie -static-libgcc -ffreestanding -nostdlib -Wall -Werror -Wextra
-SHELLCODE_TEST_FLAGS:=-O3 -g -std=c++20 -static-pie -static-libgcc -static-libstdc++ -Wall -Werror -Wextra
+SHELLCODE_FLAGS:=-O3 -s -std=c++20 -static-pie -ffreestanding -nostdlib -Wall -Werror -Wextra
+SHELLCODE_TEST_FLAGS:=-O3 -g -std=c++20 -static-pie  -Wall -Werror -Wextra
+
+ifeq ($(OS),Windows_NT)
+	SHELLCODE_TEST_FLAGS:=-static-libgcc -static-libstdc++ $(SHELLCODE_TEST_FLAGS)
+else
+ifneq (,$(findstring mingw, $(CXX)))
+	SHELLCODE_TEST_FLAGS:=-static-libgcc -static-libstdc++ $(SHELLCODE_TEST_FLAGS)
+endif
+endif
+
 
 SHELLCODES_CPP:=$(wildcard examples/*.cpp)
 SHELLCODES_O:=$(patsubst %.cpp,%.o,$(SHELLCODES_CPP))
