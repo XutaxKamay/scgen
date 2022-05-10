@@ -1,5 +1,5 @@
-SHELLCODE_FLAGS:=-O3 -s -std=c++20 -static-pie -ffreestanding -nostdlib -Wall -Werror -Wextra
-SHELLCODE_TEST_FLAGS:=-O3 -g -std=c++20 -static-pie  -Wall -Werror -Wextra
+SHELLCODE_FLAGS:=-O3 -s -std=c++20 -fPIE -ffreestanding -nostdlib -Wall -Werror -Wextra
+SHELLCODE_TEST_FLAGS:=-O3 -g -std=c++20 -fPIE -Wall -Werror -Wextra
 
 ifeq ($(OS),Windows_NT)
 	SHELLCODE_TEST_FLAGS:=-static-libgcc -static-libstdc++ $(SHELLCODE_TEST_FLAGS)

@@ -1,13 +1,18 @@
 OUTPUT_FORMAT("binary")
 ENTRY(_start)
 
+MEMORY
+{
+  shellcode (rwx)  : ORIGIN = 0x0000000, LENGTH = 0x1000000
+}
+
 SECTIONS
 {
 	.shellcode :
 	{
 		*(.text*) *(.data*) *(.bss*)
 		/*. = ALIGN(0x1000);*/
-	}/* = 0xD15AC1D1F1ED*/
+	} > shellcode /* = 0xD15AC1D1F1ED*/
 	
 	/**
 	 * These two can be discarded,
@@ -19,3 +24,4 @@ SECTIONS
 		*(.eh_frame)
 	}
 }
+
