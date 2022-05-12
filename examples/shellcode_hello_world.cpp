@@ -5,10 +5,6 @@
 #if defined(__linux__) and (defined(__x86_64__) or defined(__i386__))
     #include <sys/syscall.h>
 
-    #if defined(__i386__)
-std::uintptr_t _GLOBAL_OFFSET_TABLE_;
-    #endif
-
 struct Struct
 {
     static volatile bool initialized;
@@ -17,13 +13,6 @@ struct Struct
     {
         member = blah;
     }
-
-    #if defined(__i386__)
-    auto got() volatile
-    {
-        return &_GLOBAL_OFFSET_TABLE_;
-    }
-    #endif
 
     volatile unsigned long long member;
 };
@@ -276,10 +265,6 @@ void main(void)
     if (ret > 0)
     {
         g_struct.test_method(0xFFFFFFFFFFFFFFFF);
-    #if defined(__i386__)
-        auto got = g_struct.got();
-        *got     = 0xD34DC0D3;
-    #endif
     }
 }
 
