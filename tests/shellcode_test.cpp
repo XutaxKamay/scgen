@@ -47,8 +47,7 @@ int main(int argc, char** argv)
 
     if (not shellcode_bin.is_open())
     {
-        std::cerr << "could not open shellcode.bin"
-                  << "\n";
+        std::cerr << "could not open " << argv[1] << "\n";
         return error_code::CANT_OPEN_FILE;
     }
 

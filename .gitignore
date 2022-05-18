@@ -33,3 +33,6 @@
 
 # Output
 *.bin
+
+# Ignore compile_flags.txt
+examples/compile_flags.txt

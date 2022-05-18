@@ -35,7 +35,7 @@ inline auto syscall(const auto number, T... args)
         asm("mov %1, %%rax\n\t"
             "syscall\n\t"
             "mov %%rax, %0\n\t"
-            : "=r"(ret)
+            : "=g"(ret)
             : "g"(static_cast<std::uintptr_t>(number))
             : "rax");
     }
@@ -45,7 +45,7 @@ inline auto syscall(const auto number, T... args)
             "mov %2, %%rdi\n\t"
             "syscall\n\t"
             "mov %%rax, %0\n\t"
-            : "=r"(ret)
+            : "=g"(ret)
             : "g"(static_cast<std::uintptr_t>(number)),
               "g"(static_cast<std::uintptr_t>(std::get<0>(targs)))
             : "rax");
@@ -57,7 +57,7 @@ inline auto syscall(const auto number, T... args)
             "mov %3, %%rsi\n\t"
             "syscall\n\t"
             "mov %%rax, %0\n\t"
-            : "=r"(ret)
+            : "=g"(ret)
             : "g"(static_cast<std::uintptr_t>(number)),
               "g"(static_cast<std::uintptr_t>(std::get<0>(targs))),
               "g"(static_cast<std::uintptr_t>(std::get<1>(targs)))
@@ -71,7 +71,7 @@ inline auto syscall(const auto number, T... args)
             "mov %4, %%rdx\n\t"
             "syscall\n\t"
             "mov %%rax, %0\n\t"
-            : "=r"(ret)
+            : "=g"(ret)
             : "g"(static_cast<std::uintptr_t>(number)),
               "g"(static_cast<std::uintptr_t>(std::get<0>(targs))),
               "g"(static_cast<std::uintptr_t>(std::get<1>(targs))),
@@ -87,7 +87,7 @@ inline auto syscall(const auto number, T... args)
             "mov %5, %%rcx\n\t"
             "syscall\n\t"
             "mov %%rax, %0\n\t"
-            : "=r"(ret)
+            : "=g"(ret)
             : "g"(static_cast<std::uintptr_t>(number)),
               "g"(static_cast<std::uintptr_t>(std::get<0>(targs))),
               "g"(static_cast<std::uintptr_t>(std::get<1>(targs))),
@@ -105,7 +105,7 @@ inline auto syscall(const auto number, T... args)
             "mov %6, %%r8\n\t"
             "syscall\n\t"
             "mov %%rax, %0\n\t"
-            : "=r"(ret)
+            : "=g"(ret)
             : "g"(static_cast<std::uintptr_t>(number)),
               "g"(static_cast<std::uintptr_t>(std::get<0>(targs))),
               "g"(static_cast<std::uintptr_t>(std::get<1>(targs))),
@@ -125,7 +125,7 @@ inline auto syscall(const auto number, T... args)
             "mov %7, %%r9\n\t"
             "syscall\n\t"
             "mov %%rax, %0\n\t"
-            : "=r"(ret)
+            : "=g"(ret)
             : "g"(static_cast<std::uintptr_t>(number)),
               "g"(static_cast<std::uintptr_t>(std::get<0>(targs))),
               "g"(static_cast<std::uintptr_t>(std::get<1>(targs))),
@@ -141,7 +141,7 @@ inline auto syscall(const auto number, T... args)
         asm("mov %1, %%eax\n\t"
             "int $0x80\n\t"
             "mov %%eax, %0\n\t"
-            : "=r"(ret)
+            : "=g"(ret)
             : "g"(static_cast<std::uintptr_t>(number))
             : "eax");
     }
@@ -151,7 +151,7 @@ inline auto syscall(const auto number, T... args)
             "mov %2, %%ebx\n\t"
             "int $0x80\n\t"
             "mov %%eax, %0\n\t"
-            : "=r"(ret)
+            : "=g"(ret)
             : "g"(static_cast<std::uintptr_t>(number)),
               "g"(static_cast<std::uintptr_t>(std::get<0>(targs)))
             : "eax");
@@ -163,7 +163,7 @@ inline auto syscall(const auto number, T... args)
             "mov %3, %%ecx\n\t"
             "int $0x80\n\t"
             "mov %%eax, %0\n\t"
-            : "=r"(ret)
+            : "=g"(ret)
             : "g"(static_cast<std::uintptr_t>(number)),
               "g"(static_cast<std::uintptr_t>(std::get<0>(targs))),
               "g"(static_cast<std::uintptr_t>(std::get<1>(targs)))
@@ -177,7 +177,7 @@ inline auto syscall(const auto number, T... args)
             "mov %4, %%edx\n\t"
             "int $0x80\n\t"
             "mov %%eax, %0\n\t"
-            : "=r"(ret)
+            : "=g"(ret)
             : "g"(static_cast<std::uintptr_t>(number)),
               "g"(static_cast<std::uintptr_t>(std::get<0>(targs))),
               "g"(static_cast<std::uintptr_t>(std::get<1>(targs))),
@@ -193,7 +193,7 @@ inline auto syscall(const auto number, T... args)
             "mov %5, %%esi\n\t"
             "int $0x80\n\t"
             "mov %%eax, %0\n\t"
-            : "=r"(ret)
+            : "=g"(ret)
             : "g"(static_cast<std::uintptr_t>(number)),
               "g"(static_cast<std::uintptr_t>(std::get<0>(targs))),
               "g"(static_cast<std::uintptr_t>(std::get<1>(targs))),
@@ -211,7 +211,7 @@ inline auto syscall(const auto number, T... args)
             "mov %6, %%edi\n\t"
             "int $0x80\n\t"
             "mov %%eax, %0\n\t"
-            : "=r"(ret)
+            : "=g"(ret)
             : "g"(static_cast<std::uintptr_t>(number)),
               "g"(static_cast<std::uintptr_t>(std::get<0>(targs))),
               "g"(static_cast<std::uintptr_t>(std::get<1>(targs))),
@@ -231,7 +231,7 @@ inline auto syscall(const auto number, T... args)
             "mov %7, %%ebp\n\t"
             "int $0x80\n\t"
             "mov %%eax, %0\n\t"
-            : "=r"(ret)
+            : "=g"(ret)
             : "g"(static_cast<std::uintptr_t>(number)),
               "g"(static_cast<std::uintptr_t>(std::get<0>(targs))),
               "g"(static_cast<std::uintptr_t>(std::get<1>(targs))),
@@ -265,6 +265,13 @@ void main(void)
     if (ret > 0)
     {
         g_struct.test_method(0xFFFFFFFFFFFFFFFF);
+    }
+
+    ret = syscall(__NR_exit, 0);
+
+    if (ret)
+    {
+        asm("int3");
     }
 }
 
