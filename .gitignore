@@ -1,0 +1,9 @@
+*
+#Whitelist subdirectories
+!*/
+!*.h
+!*.cpp
+!README.md
+!.gitmodules
+!.gitignore
+!meson.build
