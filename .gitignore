@@ -7,3 +7,4 @@
 !.gitmodules
 !.gitignore
 !meson.build
+!ldscripts/shellcode.ld
