@@ -4,7 +4,8 @@
 #include <sys/syscall.h>
 #include <unistd.h>
 
-#include "linux_syscalls.h"
 #include "view_as.h"
+
+#include "linux_syscalls.h"
 
 #endif
