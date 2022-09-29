@@ -1,5 +1,5 @@
-#ifndef MENU_LINUX_SYSCALLS_H
-#define MENU_LINUX_SYSCALLS_H
+#ifndef SHELLCODE_LINUX_SYSCALLS_H
+#define SHELLCODE_LINUX_SYSCALLS_H
 
 #include <cstdint>
 #include <tuple>

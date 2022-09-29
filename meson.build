@@ -1,4 +1,4 @@
-project('menu', 'cpp')
+project('main', 'cpp')
 
 srcs = [
     'src/main.cpp'
@@ -29,4 +29,4 @@ largs += common_args
 
 ldeps = 'ldscripts/shellcode.ld'
 
-executable('menu.out', sources : srcs, cpp_pch : 'src/pch.h', include_directories : include_dirs, cpp_args : common_args, pie : true, link_args : largs, link_depends : ldeps)
+executable('main.out', sources : srcs, cpp_pch : 'src/pch.h', include_directories : include_dirs, cpp_args : common_args, pie : true, link_args : largs, link_depends : ldeps)

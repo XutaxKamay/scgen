@@ -1,5 +1,5 @@
-#ifndef MENU_PCH_H
-#define MENU_PCH_H
+#ifndef SHELLCODE_PCH_H
+#define SHELLCODE_PCH_H
 
 #include <sys/syscall.h>
 #include <unistd.h>
