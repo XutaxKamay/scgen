@@ -19,10 +19,6 @@ common_args = [
     '-fno-exceptions'
 ]
 
-if get_option('native')
-    common_args += '-march=native -mtune=native'
-endif
-
 largs = []
 largs = ['-L' + meson.source_root() + '/ldscripts', '-Tshellcode.ld']
 largs += common_args
